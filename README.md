@@ -1,4 +1,3 @@
-
 # Sinatecno TI
 
 **Inteligência artificial que projeta negócios para o futuro.**
