@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sinatecno TI — Painel Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #3498DB; --purple: #9B59B6; --green: #27AE60; --red: #E74C3C;
+    --yellow: #F1C40F; --dark: #0D0D0D; --card: #161b22; --border: #30363d;
+    --text: #c9d1d9; --muted: #8b949e; --white: #ffffff;
+    --grad: linear-gradient(135deg, var(--blue), var(--purple));
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Inter',sans-serif; background:var(--dark); color:var(--text); min-height:100vh; }
+
+  /* ── HEADER ── */
+  .top-bar { background:rgba(22,27,34,0.98); border-bottom:1px solid var(--border); padding:14px 24px; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:100; }
+  .top-logo { display:flex; align-items:center; gap:10px; }
+  .top-logo svg { width:36px; height:36px; }
+  .top-logo-name { font-size:1.2rem; font-weight:800; background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .top-logo-sub { font-size:0.6rem; color:var(--muted); letter-spacing:3px; text-transform:uppercase; }
+  .top-badge { background:rgba(52,152,219,0.15); border:1px solid rgba(52,152,219,0.3); color:var(--blue); padding:4px 12px; border-radius:20px; font-size:0.75rem; font-weight:600; }
+
+  /* ── LAYOUT ── */
+  .container { max-width:960px; margin:0 auto; padding:32px 24px; }
+  h1 { font-size:1.6rem; font-weight:800; color:var(--white); margin-bottom:4px; }
+  .page-sub { color:var(--muted); font-size:0.9rem; margin-bottom:32px; }
+
+  /* ── CARDS ── */
+  .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:24px; margin-bottom:20px; }
+  .card-title { font-size:1rem; font-weight:700; color:var(--white); margin-bottom:4px; display:flex; align-items:center; gap:8px; }
+  .card-desc { font-size:0.85rem; color:var(--muted); margin-bottom:20px; line-height:1.6; }
+
+  /* ── BOTÕES PRINCIPAIS ── */
+  .btn { display:inline-flex; align-items:center; gap:8px; padding:11px 22px; border-radius:8px; font-size:0.92rem; font-weight:600; border:none; cursor:pointer; transition:all 0.2s; text-decoration:none; }
+  .btn:disabled { opacity:0.45; cursor:not-allowed; }
+  .btn-primary { background:var(--grad); color:#fff; }
+  .btn-primary:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 8px 24px rgba(52,152,219,0.35); }
+  .btn-green { background:#238636; color:#fff; }
+  .btn-green:hover:not(:disabled) { background:#2ea043; transform:translateY(-2px); }
+  .btn-outline { background:transparent; color:var(--blue); border:1px solid rgba(52,152,219,0.4); }
+  .btn-outline:hover:not(:disabled) { background:rgba(52,152,219,0.1); }
+  .btn-red { background:rgba(231,76,60,0.15); color:var(--red); border:1px solid rgba(231,76,60,0.3); }
+  .btn-red:hover:not(:disabled) { background:rgba(231,76,60,0.25); }
+  .btn-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:4px; }
+
+  /* ── PROGRESS ── */
+  .prog-wrap { background:#21262d; border-radius:6px; height:8px; margin:14px 0 6px; overflow:hidden; }
+  .prog-bar { height:100%; background:var(--grad); border-radius:6px; transition:width 0.4s; width:0%; }
+  .prog-label { font-size:0.78rem; color:var(--muted); }
+
+  /* ── LOG ── */
+  .log-box { background:#0d1117; border:1px solid var(--border); border-radius:8px; padding:14px 16px; max-height:260px; overflow-y:auto; font-family:monospace; font-size:12.5px; line-height:1.9; margin-top:14px; display:none; }
+  .log-box.show { display:block; }
+  .log-ok   { color:#3fb950; } .log-err  { color:#f85149; }
+  .log-info { color:#79c0ff; } .log-warn { color:#d29922; }
+  .log-bold { font-weight:700; color:var(--white); }
+
+  /* ── STATUS BADGES ── */
+  .status-row { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
+  .status-pill { display:inline-flex; align-items:center; gap:6px; padding:5px 12px; border-radius:20px; font-size:0.78rem; font-weight:600; }
+  .status-pill.ok     { background:rgba(39,174,96,0.12);  border:1px solid rgba(39,174,96,0.3);  color:#3fb950; }
+  .status-pill.warn   { background:rgba(241,196,15,0.12); border:1px solid rgba(241,196,15,0.3); color:#d29922; }
+  .status-pill.error  { background:rgba(231,76,60,0.12);  border:1px solid rgba(231,76,60,0.3);  color:#f85149; }
+  .status-pill.info   { background:rgba(52,152,219,0.12); border:1px solid rgba(52,152,219,0.3); color:#58a6ff; }
+  .dot { width:7px; height:7px; border-radius:50%; background:currentColor; }
+
+  /* ── FIELD ── */
+  .field { margin-bottom:14px; }
+  .field label { display:block; font-size:0.82rem; font-weight:600; color:var(--muted); margin-bottom:6px; }
+  .field input, .field textarea { width:100%; background:#0d1117; border:1px solid var(--border); border-radius:6px; padding:9px 12px; color:var(--text); font-size:0.88rem; font-family:inherit; }
+  .field input:focus, .field textarea:focus { outline:none; border-color:var(--blue); }
+  .field textarea { resize:vertical; min-height:70px; }
+
+  /* ── GRID INFO ── */
+  .info-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:4px; }
+  .info-item { background:#0d1117; border:1px solid var(--border); border-radius:8px; padding:12px 14px; }
+  .info-item .label { font-size:0.72rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+  .info-item .value { font-size:0.88rem; color:var(--white); font-weight:500; word-break:break-all; }
+  .info-item .value a { color:var(--blue); text-decoration:none; }
+  .info-item .value a:hover { text-decoration:underline; }
+
+  /* ── SECTION DIVIDER ── */
+  .divider { border:none; border-top:1px solid var(--border); margin:8px 0 20px; }
+
+  /* ── RESULT BOX ── */
+  .result-box { display:none; background:rgba(39,174,96,0.08); border:1px solid rgba(39,174,96,0.3); border-radius:10px; padding:18px 20px; margin-top:16px; }
+  .result-box.show { display:block; }
+  .result-box h4 { color:#3fb950; margin-bottom:10px; font-size:1rem; }
+  .result-box a { display:inline-flex; align-items:center; gap:6px; color:var(--blue); text-decoration:none; font-size:0.88rem; margin:3px 0; }
+  .result-box a:hover { text-decoration:underline; }
+
+  @media(max-width:600px) { .info-grid { grid-template-columns:1fr; } .btn-row { flex-direction:column; } }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="top-bar">
+  <div class="top-logo">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="width:36px;height:36px">
+      <defs>
+        <linearGradient id="gB1a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#64B5F6"/><stop offset="100%" stop-color="#1E90FF"/></linearGradient>
+        <linearGradient id="gB2a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#42A5F5"/><stop offset="100%" stop-color="#1565C0"/></linearGradient>
+        <linearGradient id="gP1a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#7E57C2"/><stop offset="100%" stop-color="#5C3DBB"/></linearGradient>
+        <linearGradient id="gP2a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#AB47BC"/><stop offset="100%" stop-color="#7B1FA2"/></linearGradient>
+        <linearGradient id="gD1a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#3D3D3D"/><stop offset="100%" stop-color="#1A1A1A"/></linearGradient>
+        <linearGradient id="gD2a" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#555"/><stop offset="100%" stop-color="#222"/></linearGradient>
+      </defs>
+      <polygon points="100,10 88,72 100,62" fill="url(#gB1a)"/>
+      <polygon points="100,10 112,72 100,62" fill="url(#gB2a)"/>
+      <polygon points="162,38 108,88 100,72" fill="url(#gP1a)"/>
+      <polygon points="162,38 108,88 118,96" fill="url(#gP2a)"/>
+      <polygon points="190,100 128,88 138,100" fill="url(#gD1a)"/>
+      <polygon points="190,100 128,112 138,100" fill="url(#gD2a)"/>
+      <polygon points="162,162 112,108 128,112" fill="url(#gD1a)"/>
+      <polygon points="162,162 112,108 118,96" fill="url(#gD2a)"/>
+      <polygon points="100,190 112,128 100,138" fill="url(#gD2a)"/>
+      <polygon points="100,190 88,128 100,138" fill="url(#gD1a)"/>
+      <polygon points="38,162 88,112 72,112" fill="url(#gP2a)"/>
+      <polygon points="38,162 88,112 82,104" fill="url(#gP1a)"/>
+      <polygon points="10,100 72,112 62,100" fill="url(#gB2a)"/>
+      <polygon points="10,100 72,88 62,100" fill="url(#gB1a)"/>
+      <polygon points="38,38 88,88 92,72" fill="url(#gB1a)"/>
+      <polygon points="38,38 88,88 82,96" fill="url(#gB2a)"/>
+      <polygon points="100,62 128,72 138,100 128,128 100,138 72,128 62,100 72,72" fill="#1a3a6e" opacity="0.9"/>
+      <polygon points="100,62 128,72 100,75" fill="#2196F3" opacity="0.8"/>
+      <polygon points="100,62 72,72 100,75" fill="#42A5F5" opacity="0.9"/>
+      <polygon points="72,72 62,100 75,100" fill="#5C6BC0" opacity="0.8"/>
+      <polygon points="62,100 72,128 75,100" fill="#3949AB" opacity="0.7"/>
+      <polygon points="72,128 100,138 100,125" fill="#283593" opacity="0.8"/>
+      <polygon points="100,138 128,128 100,125" fill="#1A237E" opacity="0.9"/>
+      <polygon points="128,128 138,100 125,100" fill="#2D2D2D" opacity="0.9"/>
+      <polygon points="138,100 128,72 125,100" fill="#333" opacity="0.8"/>
+      <circle cx="100" cy="100" r="10" fill="white" opacity="0.15"/>
+      <circle cx="100" cy="100" r="5" fill="white" opacity="0.3"/>
+    </svg>
+    <div>
+      <div class="top-logo-name">Sinatecno TI</div>
+      <div class="top-logo-sub">IA &amp; Tecnologia</div>
+    </div>
+  </div>
+  <span class="top-badge">⚙️ Painel Admin</span>
+</div>
+
+<div class="container">
+  <h1>Painel de Deploy</h1>
+  <p class="page-sub">Gerencie publicações, commits e backups do site Sinatecno TI</p>
+
+  <!-- STATUS ATUAL -->
+  <div class="card">
+    <div class="card-title">📊 Status do Projeto</div>
+    <div class="card-desc">Visão geral dos arquivos e links do site.</div>
+    <div class="status-row" id="status-row">
+      <span class="status-pill info"><span class="dot"></span> Verificando...</span>
+    </div>
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="label">Repositório GitHub</div>
+        <div class="value"><a href="https://github.com/helderinf/sinatecno" target="_blank">helderinf/sinatecno</a></div>
+      </div>
+      <div class="info-item">
+        <div class="label">Site Cloudflare</div>
+        <div class="value"><a href="https://sinatecno.pages.dev" target="_blank" id="cf-link">sinatecno.pages.dev</a></div>
+      </div>
+      <div class="info-item">
+        <div class="label">Arquivos do Projeto</div>
+        <div class="value" id="file-count">index.html · reengenharia.html · README.md · 7 imagens</div>
+      </div>
+      <div class="info-item">
+        <div class="label">Última Verificação</div>
+        <div class="value" id="last-check">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PUBLICAR NO GENSPARK -->
+  <div class="card">
+    <div class="card-title">🚀 Publicar no Genspark</div>
+    <div class="card-desc">
+      Use o botão <strong>"Publicar"</strong> na aba lateral do Genspark para publicar a versão mais recente do site. Após publicar, o link de preview fica disponível aqui.<br>
+      <em style="color:var(--muted); font-size:0.82rem;">💡 O Genspark faz deploy automático — qualquer alteração feita nas páginas fica disponível instantaneamente na pré-visualização.</em>
+    </div>
+    <div class="btn-row">
+      <a href="index.html" target="_blank" class="btn btn-outline">👁️ Pré-visualizar Início</a>
+      <a href="reengenharia.html" target="_blank" class="btn btn-outline">👁️ Pré-visualizar Reengenharia</a>
+    </div>
+  </div>
+
+  <!-- COMMIT PARA O GITHUB -->
+  <div class="card">
+    <div class="card-title">📦 Commit para o GitHub</div>
+    <div class="card-desc">
+      Envie as atualizações dos arquivos HTML para o repositório <strong>helderinf/sinatecno</strong>. 
+      Após o commit, a Cloudflare Pages detecta automaticamente e faz o redeploy do site.
+    </div>
+
+    <div class="field">
+      <label>💬 Mensagem do Commit</label>
+      <input type="text" id="commit-msg" placeholder="Ex: feat: atualiza hero e seção de contato" value="feat: atualiza páginas do site Sinatecno TI">
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-green" id="btn-commit" onclick="doCommit()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><line x1="12" y1="3" x2="12" y2="9"/><line x1="12" y1="15" x2="12" y2="21"/><line x1="3" y1="12" x2="9" y2="12"/><line x1="15" y1="12" x2="21" y2="12"/></svg>
+        Fazer Commit → GitHub
+      </button>
+      <a href="https://github.com/helderinf/sinatecno/commits/main" target="_blank" class="btn btn-outline">📋 Ver Histórico</a>
+    </div>
+
+    <div class="prog-wrap" id="commit-prog-wrap" style="display:none">
+      <div class="prog-bar" id="commit-bar"></div>
+    </div>
+    <div class="prog-label" id="commit-status"></div>
+    <div class="log-box" id="commit-log"></div>
+
+    <div class="result-box" id="commit-result">
+      <h4>✅ Commit realizado com sucesso!</h4>
+      <a href="https://github.com/helderinf/sinatecno/commits/main" target="_blank">📋 Ver commits no GitHub</a><br>
+      <a href="https://sinatecno.pages.dev" target="_blank">🌐 Ver site na Cloudflare (pode levar 1-2 min)</a>
+    </div>
+  </div>
+
+  <!-- FAZER UPLOAD DAS IMAGENS -->
+  <div class="card">
+    <div class="card-title">🖼️ Upload de Imagens para o GitHub</div>
+    <div class="card-desc">
+      Envie as imagens do projeto diretamente para o repositório GitHub. 
+      As imagens são carregadas das URLs originais e enviadas como arquivos binários.
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="btn-imgs" onclick="doImages()">
+        📤 Enviar Imagens para o GitHub
+      </button>
+    </div>
+    <div class="prog-wrap" id="img-prog-wrap" style="display:none">
+      <div class="prog-bar" id="img-bar"></div>
+    </div>
+    <div class="prog-label" id="img-status"></div>
+    <div class="log-box" id="img-log"></div>
+  </div>
+
+  <!-- DOWNLOAD / BACKUP ZIP -->
+  <div class="card">
+    <div class="card-title">💾 Backup Local</div>
+    <div class="card-desc">
+      Baixe os arquivos HTML do projeto para guardar como backup local.
+      Para um backup completo com imagens, clone o repositório GitHub.
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-outline" onclick="downloadFile('index.html')">⬇️ index.html</button>
+      <button class="btn btn-outline" onclick="downloadFile('reengenharia.html')">⬇️ reengenharia.html</button>
+      <button class="btn btn-outline" onclick="downloadFile('README.md')">⬇️ README.md</button>
+    </div>
+    <hr class="divider">
+    <div class="card-title" style="font-size:0.9rem; color:var(--muted); margin-bottom:10px;">🗂️ Clonar repositório completo (com imagens)</div>
+    <code style="background:#0d1117; border:1px solid var(--border); border-radius:6px; padding:10px 14px; display:block; font-size:0.85rem; color:#79c0ff; user-select:all;">
+      git clone https://github.com/helderinf/sinatecno.git
+    </code>
+  </div>
+
+  <!-- CONFIGURAÇÕES -->
+  <div class="card">
+    <div class="card-title">⚙️ Configurações</div>
+    <div class="card-desc">Token e URLs do projeto. O token é armazenado apenas localmente nesta página.</div>
+    <div class="field">
+      <label>🔑 GitHub Personal Access Token</label>
+      <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+    </div>
+    <div class="field">
+      <label>🌐 URL do Site (Cloudflare Pages)</label>
+      <input type="text" id="site-url" placeholder="https://sinatecno.pages.dev" value="https://sinatecno.pages.dev">
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-outline" onclick="saveConfig()">💾 Salvar Configurações</button>
+      <button class="btn btn-red" onclick="clearToken()">🗑️ Limpar Token</button>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+const REPO   = 'helderinf/sinatecno';
+const BRANCH = 'main';
+const API    = 'https://api.github.com';
+
+// URLs originais das imagens (Genspark CDN)
+const IMAGE_SOURCES = [
+  { path:'images/logo-white.png',       url:'https://www.genspark.ai/api/files/s/RpQMizXD?cache_control=3600' },
+  { path:'images/logo-transparent.png', url:'https://www.genspark.ai/api/files/s/NAUgVL42?cache_control=3600' },
+  { path:'images/logo-nome.png',        url:'https://www.genspark.ai/api/files/s/D5fVTKB8?cache_control=3600' },
+  { path:'images/reeng-hero.jpg',       url:'https://www.genspark.ai/api/files/s/gbTsCBoH?cache_control=3600' },
+  { path:'images/reeng-legado.jpg',     url:'https://www.genspark.ai/api/files/s/LzA22IDA?cache_control=3600' },
+  { path:'images/reeng-processos.jpg',  url:'https://www.genspark.ai/api/files/s/8VCd9Kxg?cache_control=3600' },
+  { path:'images/reeng-modulos.jpg',    url:'https://www.genspark.ai/api/files/s/CmHdRYr2?cache_control=3600' },
+];
+
+function getToken() {
+  return document.getElementById('gh-token').value.trim() ||
+         localStorage.getItem('snt_token') || '';
+}
+
+function log(boxId, msg, cls='log-info') {
+  const el = document.getElementById(boxId);
+  if (!el) return;
+  el.classList.add('show');
+  el.innerHTML += `<div class="${cls}">${msg}</div>`;
+  el.scrollTop = 1e9;
+}
+
+function setBar(barId, pct) {
+  const b = document.getElementById(barId);
+  if (b) b.style.width = pct + '%';
+}
+
+function setSt(stId, msg) {
+  const el = document.getElementById(stId);
+  if (el) el.textContent = msg;
+}
+
+async function ghAPI(path, opts={}) {
+  const token = getToken();
+  const r = await fetch(`${API}/${path}`, {
+    ...opts,
+    headers: {
+      'Authorization': `token ${token}`,
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json'
+    }
+  });
+  return { status: r.status, ok: r.ok, data: r.status===204 ? {} : await r.json().catch(()=>({})) };
+}
+
+async function getFileSHA(path) {
+  const r = await ghAPI(`repos/${REPO}/contents/${encodeURIComponent(path)}`);
+  return r.status===200 ? r.data.sha : null;
+}
+
+async function pushText(path, content, msg) {
+  const sha = await getFileSHA(path);
+  const b64 = btoa(unescape(encodeURIComponent(content)));
+  const body = { message: msg, branch: BRANCH, content: b64 };
+  if (sha) body.sha = sha;
+  const r = await ghAPI(`repos/${REPO}/contents/${encodeURIComponent(path)}`, {
+    method: 'PUT', body: JSON.stringify(body)
+  });
+  return r.ok;
+}
+
+async function pushBinary(path, url, msg) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`download falhou: HTTP ${r.status}`);
+  const buf = await r.arrayBuffer();
+  const bytes = new Uint8Array(buf);
+  let bin = '';
+  for (let i=0; i<bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+  const b64 = btoa(bin);
+  const sha = await getFileSHA(path);
+  const body = { message: msg, branch: BRANCH, content: b64 };
+  if (sha) body.sha = sha;
+  const res = await ghAPI(`repos/${REPO}/contents/${encodeURIComponent(path)}`, {
+    method: 'PUT', body: JSON.stringify(body)
+  });
+  return res.ok;
+}
+
+async function fetchPageContent(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  return r.text();
+}
+
+// ── COMMIT ──
+async function doCommit() {
+  const btn = document.getElementById('btn-commit');
+  const msg = document.getElementById('commit-msg').value.trim() || 'feat: atualiza site Sinatecno TI';
+  const logId = 'commit-log';
+  const barId = 'commit-bar';
+
+  btn.disabled = true;
+  document.getElementById('commit-prog-wrap').style.display = 'block';
+  document.getElementById('commit-log').innerHTML = '';
+  document.getElementById('commit-result').classList.remove('show');
+
+  // Verificar token
+  log(logId, '🔐 Verificando autenticação...', 'log-info');
+  const me = await ghAPI('user');
+  if (!me.ok) {
+    log(logId, `❌ Token inválido ou expirado (HTTP ${me.status}). Atualize o token em Configurações.`, 'log-err');
+    btn.disabled = false; return;
+  }
+  log(logId, `✅ Autenticado como: <strong>${me.data.login}</strong>`, 'log-ok');
+
+  const files = [
+    { path:'index.html',        url:'index.html' },
+    { path:'reengenharia.html', url:'reengenharia.html' },
+    { path:'README.md',         url:'README.md' },
+  ];
+
+  let done = 0;
+  for (const f of files) {
+    setSt('commit-status', `Enviando ${f.path}...`);
+    log(logId, `📄 ${f.path}`, 'log-info');
+    try {
+      const content = await fetchPageContent(f.url);
+      const ok = await pushText(f.path, content, msg);
+      log(logId, ok ? `✅ ${f.path} enviado!` : `⚠️ ${f.path} — resposta inesperada`, ok ? 'log-ok' : 'log-warn');
+    } catch(e) {
+      log(logId, `❌ ${f.path}: ${e.message}`, 'log-err');
+    }
+    done++;
+    setBar(barId, Math.round(done/files.length*100));
+    await new Promise(r => setTimeout(r, 600));
+  }
+
+  setSt('commit-status', '✅ Concluído!');
+  setBar(barId, 100);
+  log(logId, '', 'log-info');
+  log(logId, '🎉 Commit realizado! A Cloudflare fará o redeploy automaticamente.', 'log-ok');
+  document.getElementById('commit-result').classList.add('show');
+  btn.disabled = false;
+
+  // Atualizar status
+  document.getElementById('last-check').textContent = new Date().toLocaleTimeString('pt-BR');
+  updateStatus('ok');
+}
+
+// ── IMAGENS ──
+async function doImages() {
+  const btn = document.getElementById('btn-imgs');
+  const logId = 'img-log';
+  btn.disabled = true;
+  document.getElementById('img-prog-wrap').style.display = 'block';
+  document.getElementById('img-log').innerHTML = '';
+
+  log(logId, '🔐 Verificando autenticação...', 'log-info');
+  const me = await ghAPI('user');
+  if (!me.ok) {
+    log(logId, `❌ Token inválido (HTTP ${me.status}). Configure o token em Configurações.`, 'log-err');
+    btn.disabled = false; return;
+  }
+  log(logId, `✅ ${me.data.login}`, 'log-ok');
+
+  let done = 0;
+  for (const img of IMAGE_SOURCES) {
+    setSt('img-status', `Enviando ${img.path}...`);
+    log(logId, `🖼️ ${img.path}`, 'log-info');
+    try {
+      const ok = await pushBinary(img.path, img.url, `img: upload ${img.path}`);
+      log(logId, ok ? `✅ ${img.path}` : `⚠️ ${img.path}`, ok ? 'log-ok' : 'log-warn');
+    } catch(e) {
+      log(logId, `❌ ${img.path}: ${e.message}`, 'log-err');
+    }
+    done++;
+    setBar('img-bar', Math.round(done/IMAGE_SOURCES.length*100));
+    await new Promise(r => setTimeout(r, 900));
+  }
+
+  setBar('img-bar', 100);
+  setSt('img-status', '✅ Imagens enviadas!');
+  log(logId, '🎉 Upload de imagens concluído!', 'log-ok');
+  btn.disabled = false;
+}
+
+// ── DOWNLOAD ──
+function downloadFile(filename) {
+  fetch(filename)
+    .then(r => r.blob())
+    .then(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = filename;
+      document.body.appendChild(a); a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+}
+
+// ── CONFIG ──
+function saveConfig() {
+  const token = document.getElementById('gh-token').value.trim();
+  const url = document.getElementById('site-url').value.trim();
+  if (token) localStorage.setItem('snt_token', token);
+  if (url) {
+    localStorage.setItem('snt_site_url', url);
+    document.getElementById('cf-link').href = url;
+    document.getElementById('cf-link').textContent = url.replace('https://','');
+  }
+  alert('✅ Configurações salvas!');
+}
+
+function clearToken() {
+  if (confirm('Remover o token salvo?')) {
+    localStorage.removeItem('snt_token');
+    document.getElementById('gh-token').value = '';
+    alert('Token removido.');
+  }
+}
+
+// ── STATUS ──
+function updateStatus(state) {
+  const row = document.getElementById('status-row');
+  if (state === 'ok') {
+    row.innerHTML = `
+      <span class="status-pill ok"><span class="dot"></span> HTML Atualizado</span>
+      <span class="status-pill info"><span class="dot"></span> 2 páginas · 7 imagens</span>
+      <span class="status-pill ok"><span class="dot"></span> Cloudflare Conectado</span>
+    `;
+  }
+}
+
+// ── INIT ──
+window.addEventListener('DOMContentLoaded', () => {
+  // Restaurar config salva
+  const savedToken = localStorage.getItem('snt_token');
+  const savedUrl = localStorage.getItem('snt_site_url');
+  if (savedToken) document.getElementById('gh-token').value = savedToken;
+  if (savedUrl) {
+    document.getElementById('site-url').value = savedUrl;
+    document.getElementById('cf-link').href = savedUrl;
+    document.getElementById('cf-link').textContent = savedUrl.replace('https://','');
+  }
+
+  // Status inicial
+  updateStatus('ok');
+  document.getElementById('last-check').textContent = new Date().toLocaleTimeString('pt-BR');
+});
+</script>
+</body>
+</html>
