@@ -347,12 +347,12 @@
                 </div>
             </a>
             <ul class="nav-links" id="nav-links">
-                <li><a href="index.html">Início</a></li>
-                <li><a href="reengenharia.html" class="active">Reengenharia com IA</a></li>
-                <li><a href="index.html#transformation">Transformação</a></li>
-                <li><a href="index.html#tecnologias">Tecnologias</a></li>
-                <li><a href="index.html#beneficios">Benefícios</a></li>
-                <li><a href="index.html#contact">Contato</a></li>
+                <li><a href="index.html" onclick="document.getElementById('nav-links').classList.remove('open')">Início</a></li>
+                <li><a href="reengenharia.html" class="active" onclick="document.getElementById('nav-links').classList.remove('open')">Reengenharia com IA</a></li>
+                <li><a href="index.html#transformation" onclick="document.getElementById('nav-links').classList.remove('open')">Transformação</a></li>
+                <li><a href="index.html#tecnologias" onclick="document.getElementById('nav-links').classList.remove('open')">Tecnologias</a></li>
+                <li><a href="index.html#beneficios" onclick="document.getElementById('nav-links').classList.remove('open')">Benefícios</a></li>
+                <li><a href="index.html#contact" onclick="document.getElementById('nav-links').classList.remove('open')">Contato</a></li>
             </ul>
             <button class="hamburger" id="hamburger" aria-label="Menu" onclick="document.getElementById('nav-links').classList.toggle('open')"><i class="fas fa-bars"></i></button>
         </nav>
@@ -675,9 +675,7 @@
     </footer>
 
     <script>
-        // Menu Hamburguer
-        const navLinks = document.getElementById('nav-links');
-        navLinks.querySelectorAll('a').forEach(l => l.addEventListener('click', () => navLinks.classList.remove('open')));
+        // Menu Hamburguer — handled via inline onclick attributes
 
         // Hero BG parallax load
         const heroBg = document.getElementById('hero-bg');

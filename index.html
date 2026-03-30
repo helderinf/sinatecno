@@ -177,12 +177,12 @@
                 </div>
             </a>
             <ul class="nav-links" id="nav-links">
-                <li><a href="#inicio" class="active">Início</a></li>
-                <li><a href="reengenharia.html">Reengenharia com IA</a></li>
-                <li><a href="#transformation">Transformação</a></li>
-                <li><a href="#tecnologias">Tecnologias</a></li>
-                <li><a href="#beneficios">Benefícios</a></li>
-                <li><a href="#contact">Contato</a></li>
+                <li><a href="#inicio" class="active" onclick="document.getElementById('nav-links').classList.remove('open')">Início</a></li>
+                <li><a href="reengenharia.html" onclick="document.getElementById('nav-links').classList.remove('open')">Reengenharia com IA</a></li>
+                <li><a href="#transformation" onclick="document.getElementById('nav-links').classList.remove('open')">Transformação</a></li>
+                <li><a href="#tecnologias" onclick="document.getElementById('nav-links').classList.remove('open')">Tecnologias</a></li>
+                <li><a href="#beneficios" onclick="document.getElementById('nav-links').classList.remove('open')">Benefícios</a></li>
+                <li><a href="#contact" onclick="document.getElementById('nav-links').classList.remove('open')">Contato</a></li>
             </ul>
             <button class="hamburger" id="hamburger" aria-label="Menu" onclick="document.getElementById('nav-links').classList.toggle('open')"><i class="fas fa-bars"></i></button>
         </nav>
@@ -403,8 +403,6 @@
         </div>
     </footer>
     <script>
-        const navLinks = document.getElementById('nav-links');
-        if(navLinks) navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => navLinks.classList.remove('open')));
         function showToast(msg) {
             const toast = document.getElementById('toast');
             if(toast) { document.getElementById('toast-msg').textContent = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 4000); }
