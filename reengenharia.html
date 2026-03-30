@@ -354,7 +354,7 @@
                 <li><a href="index.html#beneficios">Benefícios</a></li>
                 <li><a href="index.html#contact">Contato</a></li>
             </ul>
-            <button class="hamburger" id="hamburger" aria-label="Menu"><i class="fas fa-bars"></i></button>
+            <button class="hamburger" id="hamburger" aria-label="Menu" onclick="document.getElementById('nav-links').classList.toggle('open')"><i class="fas fa-bars"></i></button>
         </nav>
     </header>
 
@@ -676,10 +676,7 @@
 
     <script>
         // Menu Hamburguer
-        const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('nav-links');
-        hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
-        hamburger.addEventListener('touchstart', (e) => { e.preventDefault(); navLinks.classList.toggle('open'); }, { passive: false });
         navLinks.querySelectorAll('a').forEach(l => l.addEventListener('click', () => navLinks.classList.remove('open')));
 
         // Hero BG parallax load

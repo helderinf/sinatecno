@@ -184,7 +184,7 @@
                 <li><a href="#beneficios">Benefícios</a></li>
                 <li><a href="#contact">Contato</a></li>
             </ul>
-            <button class="hamburger" id="hamburger" aria-label="Menu"><i class="fas fa-bars"></i></button>
+            <button class="hamburger" id="hamburger" aria-label="Menu" onclick="document.getElementById('nav-links').classList.toggle('open')"><i class="fas fa-bars"></i></button>
         </nav>
     </header>
     <section class="hero" id="inicio">
@@ -403,12 +403,7 @@
         </div>
     </footer>
     <script>
-        const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('nav-links');
-        if(hamburger) {
-            hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
-            hamburger.addEventListener('touchstart', (e) => { e.preventDefault(); navLinks.classList.toggle('open'); }, { passive: false });
-        }
         if(navLinks) navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => navLinks.classList.remove('open')));
         function showToast(msg) {
             const toast = document.getElementById('toast');
