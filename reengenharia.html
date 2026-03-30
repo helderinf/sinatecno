@@ -42,7 +42,7 @@
         .nav-links a { text-decoration: none; color: rgba(255,255,255,0.75); font-weight: 500; font-size: 0.92rem; transition: color 0.3s; position: relative; }
         .nav-links a:hover, .nav-links a.active { color: var(--tech-blue); }
         .nav-links a.active::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 2px; background: var(--gradient-tech); border-radius: 2px; }
-        .hamburger { display: none; background: none; border: none; cursor: pointer; color: var(--white); font-size: 1.4rem; }
+        .hamburger { display: none; background: none; border: none; cursor: pointer; color: var(--white); font-size: 1.4rem; padding: 0.5rem 0.75rem; line-height: 1; touch-action: manipulation; -webkit-tap-highlight-color: transparent; position: relative; z-index: 1002; }
 
         /* ── HERO ── */
         .hero {
@@ -676,6 +676,7 @@
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('nav-links');
         hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+        hamburger.addEventListener('touchstart', (e) => { e.preventDefault(); navLinks.classList.toggle('open'); }, { passive: false });
         navLinks.querySelectorAll('a').forEach(l => l.addEventListener('click', () => navLinks.classList.remove('open')));
 
         // Hero BG parallax load
