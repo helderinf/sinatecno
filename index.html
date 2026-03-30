@@ -112,6 +112,56 @@
             .contact-content { grid-template-columns: 1fr; gap: 2rem; }
             .cta-button.secondary { margin-left: 0; margin-top: 1rem; display: block; text-align: center; }
         }
+        /* ── ERA SECTION ── */
+        .era-section { background: #111; padding: 80px 0; }
+        .era-timeline { display: grid; grid-template-columns: repeat(auto-fit, minmax(185px, 1fr)); gap: 1.5rem; margin: 2.5rem 0; }
+        .era-item { text-align: center; padding: 2rem 1.25rem; border-radius: 14px; }
+        .era-item.dead { background: rgba(231,76,60,0.07); border: 1px solid rgba(231,76,60,0.2); }
+        .era-item.dead .era-icon { color: #E74C3C; font-size: 2.2rem; margin-bottom: 0.75rem; }
+        .era-item.yours { background: rgba(52,152,219,0.08); border: 1px solid rgba(52,152,219,0.25); }
+        .era-item.yours .era-icon { color: #3498DB; font-size: 2.2rem; margin-bottom: 0.75rem; }
+        .era-item h4 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.4rem; }
+        .era-item p { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.55; }
+        .era-badge { display: inline-block; font-size: 0.68rem; font-weight: 700; padding: 0.22rem 0.6rem; border-radius: 4px; margin-bottom: 0.65rem; text-transform: uppercase; letter-spacing: 1px; }
+        .era-badge.danger { background: rgba(231,76,60,0.2); color: #E74C3C; }
+        .era-badge.yours-badge { background: rgba(52,152,219,0.2); color: #3498DB; }
+        .era-message { text-align: center; max-width: 720px; margin: 0 auto; background: linear-gradient(135deg, rgba(52,152,219,0.07), rgba(155,89,182,0.07)); border: 1px solid rgba(52,152,219,0.2); border-radius: 18px; padding: 3rem 2.5rem; }
+        .era-message h3 { font-size: 1.6rem; font-weight: 800; color: #fff; margin-bottom: 1rem; line-height: 1.3; }
+        .era-message p { color: rgba(255,255,255,0.62); line-height: 1.85; margin-bottom: 1.75rem; font-size: 1.05rem; }
+        /* ── TESTIMONIALS ── */
+        .testimonials { background: #f8f9fa; padding: 80px 0; }
+        .testimonials .section-title { color: #2C3E50; }
+        .t-subtitle { text-align: center; color: #7F8C8D; margin: -1rem auto 3rem; max-width: 560px; line-height: 1.7; font-size: 1rem; }
+        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(275px, 1fr)); gap: 2rem; }
+        .testimonial-card { background: #fff; padding: 2.25rem; border-radius: 14px; box-shadow: 0 4px 24px rgba(0,0,0,0.07); border-top: 4px solid; }
+        .testimonial-card:nth-child(1) { border-top-color: #3498DB; }
+        .testimonial-card:nth-child(2) { border-top-color: #9B59B6; }
+        .testimonial-card:nth-child(3) { border-top-color: #27AE60; }
+        .t-quote { font-size: 0.98rem; color: #2C3E50; line-height: 1.75; margin-bottom: 1.5rem; font-style: italic; padding-left: 1.1rem; border-left: 3px solid; }
+        .testimonial-card:nth-child(1) .t-quote { border-left-color: rgba(52,152,219,0.3); }
+        .testimonial-card:nth-child(2) .t-quote { border-left-color: rgba(155,89,182,0.3); }
+        .testimonial-card:nth-child(3) .t-quote { border-left-color: rgba(39,174,96,0.3); }
+        .t-author { display: flex; align-items: center; gap: 0.85rem; }
+        .t-avatar { width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1rem; color: #fff; flex-shrink: 0; }
+        .testimonial-card:nth-child(1) .t-avatar { background: linear-gradient(135deg,#3498DB,#9B59B6); }
+        .testimonial-card:nth-child(2) .t-avatar { background: linear-gradient(135deg,#9B59B6,#E74C3C); }
+        .testimonial-card:nth-child(3) .t-avatar { background: linear-gradient(135deg,#27AE60,#3498DB); }
+        .t-name { font-weight: 700; font-size: 0.95rem; color: #2C3E50; }
+        .t-role { font-size: 0.78rem; color: #7F8C8D; }
+        .t-result { margin-top: 1.25rem; padding: 0.7rem 1rem; border-radius: 8px; font-size: 0.84rem; font-weight: 700; }
+        .testimonial-card:nth-child(1) .t-result { background: rgba(52,152,219,0.09); color: #2980B9; }
+        .testimonial-card:nth-child(2) .t-result { background: rgba(155,89,182,0.09); color: #8E44AD; }
+        .testimonial-card:nth-child(3) .t-result { background: rgba(39,174,96,0.09); color: #1E8449; }
+        /* ── VIDEO SECTION ── */
+        .video-section { background: linear-gradient(135deg, #0d0d0d, #0a0a1e); padding: 80px 0; text-align: center; }
+        .video-section .section-title { color: #fff; }
+        .video-preview { position: relative; max-width: 680px; margin: 3rem auto 0; border-radius: 18px; overflow: hidden; border: 1px solid rgba(52,152,219,0.22); box-shadow: 0 20px 60px rgba(0,0,0,0.55); cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
+        .video-preview:hover { transform: translateY(-6px); box-shadow: 0 30px 80px rgba(0,0,0,0.65); }
+        .video-preview-bg { background: linear-gradient(135deg, #090e1a, #0e0520); padding: 4.5rem 3rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.25rem; }
+        .play-btn { width: 80px; height: 80px; border-radius: 50%; background: var(--gradient-tech); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; color: #fff; box-shadow: 0 0 40px rgba(52,152,219,0.45); transition: all 0.3s; }
+        .video-preview:hover .play-btn { transform: scale(1.1); box-shadow: 0 0 60px rgba(52,152,219,0.65); }
+        .video-title-text { font-size: 1.15rem; font-weight: 700; color: #fff; }
+        .video-duration { font-size: 0.75rem; color: rgba(255,255,255,0.35); letter-spacing: 2px; }
     </style>
 </head>
 <body>
@@ -140,18 +190,15 @@
         <div class="container">
             <div class="hero-content fade-in-up">
                 <p class="hero-slogan">Inteligência artificial que projeta negócios para o futuro</p>
-                <h1>A Evolução é Mandatária, <span class="warning">Não Opcional</span></h1>
-                <p class="subtitle">Convertemos sistemas legados para arquiteturas geradas por IA. Empresas que ignoram a transição para sistemas inteligentes perdem competitividade e arriscam a obsolescência total.</p>
+                <h1>O Mundo Mudou.<br><span class="warning">Sua Empresa Está Pronta?</span></h1>
+                <p class="subtitle">A IA está remodelando cada setor da economia. Empresas que não se adaptam perdem competitividade a cada mês — as que se transformam saltam anos à frente da concorrência.</p>
                 <div class="hero-buttons">
                     <a href="#transformation" class="cta-button">Modernizar meu Sistema Agora</a>
                     <a href="#urgency" class="cta-button secondary">Entender os Riscos</a>
                 </div>
             </div>
             <div class="hero-image">
-                <div style="background: var(--gradient-tech); border-radius: 15px; padding: 3rem; text-align: center; box-shadow: 0 15px 40px rgba(0,0,0,0.3);">
-                    <i class="fas fa-brain" style="font-size: 8rem; color: rgba(255,255,255,0.9);"></i>
-                    <p style="margin-top: 1rem; font-size: 1.2rem; color: rgba(255,255,255,0.85);">Inteligência Artificial &amp; TI</p>
-                </div>
+                <img src="images/hero-transform.svg" alt="Transformação Digital com IA — Antes e Depois" style="width:100%; border-radius:15px; box-shadow:0 15px 40px rgba(0,0,0,0.35);">
             </div>
         </div>
     </section>
@@ -161,6 +208,47 @@
             <h2 class="urgency-title">Atenção: Sua Empresa Corre Risco de Falência Tecnológica</h2>
             <p class="urgency-text">Empresas que não se modernizam perdem 23% de eficiência operacional por ano. Em 5 anos, sem atualização tecnológica, sua empresa pode perder até 70% de competitividade.</p>
             <a href="#contact" class="cta-button" style="background: rgba(255,255,255,0.2); border: 2px solid var(--white);"><i class="fas fa-clock"></i> Agendar Consulta Urgente</a>
+        </div>
+    </section>
+    <!-- ERA SECTION -->
+    <section class="era-section" id="era">
+        <div class="container">
+            <div style="text-align:center; margin-bottom:2rem;">
+                <span style="font-size:0.75rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--danger);">A história não perdoa</span>
+                <h2 class="section-title" style="color:#fff; margin-top:0.75rem;">Adapte-se ou Fique Para Trás.<br><span style="background:var(--gradient-tech); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">O Padrão se Repete Agora.</span></h2>
+                <p style="color:rgba(255,255,255,0.6); max-width:660px; margin:1.25rem auto 0; line-height:1.85; font-size:1.05rem;">Kodak inventou a câmera digital e faliu por não adotá-la. Blockbuster ignorou o streaming. Nokia dominou o mercado e perdeu tudo. A IA está fazendo o mesmo hoje — e o padrão é idêntico.</p>
+            </div>
+            <div class="era-timeline">
+                <div class="era-item dead">
+                    <div class="era-badge danger">Extinta</div>
+                    <div class="era-icon"><i class="fas fa-camera"></i></div>
+                    <h4>Kodak</h4>
+                    <p>Inventou a câmera digital em 1975. Ignorou a disrupção. Faliu em 2012.</p>
+                </div>
+                <div class="era-item dead">
+                    <div class="era-badge danger">Extinta</div>
+                    <div class="era-icon"><i class="fas fa-film"></i></div>
+                    <h4>Blockbuster</h4>
+                    <p>Rejeitou a Netflix por US$ 50 mi em 2000. Fechou em 2010.</p>
+                </div>
+                <div class="era-item dead">
+                    <div class="era-badge danger">Irrelevante</div>
+                    <div class="era-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h4>Nokia</h4>
+                    <p>Líder absoluto. Ignorou smartphones. Perdeu 90% do mercado.</p>
+                </div>
+                <div class="era-item yours">
+                    <div class="era-badge yours-badge">Sua Empresa</div>
+                    <div class="era-icon"><i class="fas fa-building"></i></div>
+                    <h4>Agora</h4>
+                    <p>A IA transforma cada setor. O momento de decidir é hoje.</p>
+                </div>
+            </div>
+            <div class="era-message">
+                <h3>Mas você ainda tem tempo — e nós temos o caminho.</h3>
+                <p>Empresas que adotaram IA nos últimos 2 anos já estão entre 3 e 5 anos à frente da concorrência. Esse intervalo cresce a cada mês. Não se trata de ser o primeiro em tudo — mas de não ser o último a perceber o que está acontecendo.</p>
+                <a href="#contact" class="cta-button"><i class="fas fa-arrow-right"></i> Quero fazer parte da nova geração</a>
+            </div>
         </div>
     </section>
     <section id="transformation" class="transformation-process">
@@ -197,6 +285,39 @@
             </div>
         </div>
     </section>
+    <!-- TESTIMONIALS -->
+    <section class="testimonials" id="depoimentos">
+        <div class="container">
+            <h2 class="section-title" style="text-align:center;">Empresas que Já Transformaram</h2>
+            <p class="t-subtitle">Resultados reais de quem escolheu o futuro no momento certo.</p>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p class="t-quote">Nossa produtividade triplicou em 6 meses. O que antes levava uma semana, hoje fazemos em horas. O processo foi mais suave e estruturado do que esperávamos.</p>
+                    <div class="t-author">
+                        <div class="t-avatar">JC</div>
+                        <div><div class="t-name">João C. — CEO</div><div class="t-role">Indústria Logística · São Paulo</div></div>
+                    </div>
+                    <div class="t-result"><i class="fas fa-arrow-up"></i> +280% produtividade operacional em 6 meses</div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="t-quote">Reduzimos 65% dos custos de TI e eliminamos aqueles bugs que nos atormentavam há anos. A equipe ficou mais leve e focada no que realmente importa.</p>
+                    <div class="t-author">
+                        <div class="t-avatar">ML</div>
+                        <div><div class="t-name">Maria L. — CTO</div><div class="t-role">Fintech · Rio de Janeiro</div></div>
+                    </div>
+                    <div class="t-result"><i class="fas fa-chart-line"></i> -65% custo de manutenção de TI</div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="t-quote">Entregaram além do prometido. Nosso sistema responde 10× mais rápido e os clientes percebem a diferença. A sensação de alívio pós-transformação é indescritível.</p>
+                    <div class="t-author">
+                        <div class="t-avatar">RP</div>
+                        <div><div class="t-name">Ricardo P. — COO</div><div class="t-role">Varejo Digital · Belo Horizonte</div></div>
+                    </div>
+                    <div class="t-result"><i class="fas fa-rocket"></i> 10× mais velocidade · 99% menos bugs</div>
+                </div>
+            </div>
+        </div>
+    </section>
     <section id="reengenharia" style="background: linear-gradient(135deg, #0D0D0D 0%, #111827 100%); padding: 90px 0; position: relative; overflow: hidden;">
         <div class="container" style="position:relative; z-index:2;">
             <div style="text-align:center; margin-bottom: 3.5rem;">
@@ -220,7 +341,20 @@
             </div>
         </div>
     </section>
-    <div class="warning-banner"><div class="container"><h3>⚠️ Aviso Crítico: Atraso na Modernização Custa Caro</h3><p>Empresas que atrasam a modernização tecnológica perdem em média <strong>R$ 2,3 milhões por ano</strong> em oportunidades perdidas e ineficiências operacionais.</p></div></div>
+    <!-- VIDEO SECTION -->
+    <section class="video-section" id="historia">
+        <div class="container">
+            <h2 class="section-title">Nossa História em 22 Segundos</h2>
+            <p style="color:rgba(255,255,255,0.5); max-width:540px; margin:1rem auto 0; line-height:1.8; font-size:1rem;">Uma animação que resume o momento que o mercado está vivendo — e como a Sinatecno TI transforma a trajetória da sua empresa.</p>
+            <div class="video-preview" onclick="window.open('animacao.html','_blank')" role="button" aria-label="Assistir animação">
+                <div class="video-preview-bg">
+                    <div class="play-btn"><i class="fas fa-play"></i></div>
+                    <div class="video-title-text">O Mundo Mudou. Sua Empresa Acompanhou?</div>
+                    <div class="video-duration"><i class="fas fa-clock"></i> &nbsp;22 SEGUNDOS</div>
+                </div>
+            </div>
+        </div>
+    </section>
     <section id="contact" class="contact">
         <div class="container">
             <h2 class="section-title">Solicite uma Avaliação Tecnológica</h2>
@@ -264,7 +398,7 @@
                 <div class="footer-section"><h4>Tecnologias</h4><ul><li><a href="#tecnologias">Machine Learning</a></li><li><a href="#tecnologias">Deep Learning</a></li><li><a href="#tecnologias">Processamento de Linguagem</a></li><li><a href="#tecnologias">Visão por Computador</a></li></ul></div>
                 <div class="footer-section"><h4>Recursos</h4><ul><li><a href="#">Documentação</a></li><li><a href="#">API Reference</a></li><li><a href="#">Casos de Sucesso</a></li><li><a href="#">Blog Técnico</a></li></ul></div>
             </div>
-            <div class="footer-bottom"><p>&copy; 2025 Sinatecno TI. Todos os direitos reservados.</p></div>
+            <div class="footer-bottom"><p>&copy; 2026 Sinatecno TI. Todos os direitos reservados.</p></div>
         </div>
     </footer>
     <script>
