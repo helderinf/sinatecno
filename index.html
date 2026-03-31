@@ -48,7 +48,8 @@
         .cta-button:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(52,152,219,0.3); }
         .cta-button.secondary { background: transparent; border: 2px solid var(--tech-blue); margin-left: 1rem; }
         .cta-button.secondary:hover { background: var(--tech-blue); }
-        .urgency-warning { background: var(--gradient-warning); color: var(--white); padding: 60px 0; text-align: center; }
+        .urgency-warning { background: var(--gradient-warning); color: var(--white); padding: 60px 0; text-align: center; position: relative; z-index: 10; margin-top: -36px; border-radius: 20px 20px 0 0; transform: translateY(36px); transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.65s ease; box-shadow: 0 -8px 0 rgba(0,0,0,0); }
+        .urgency-warning.warning-risen { transform: translateY(0); box-shadow: 0 -12px 40px rgba(231,76,60,0.4); }
         .urgency-icon { font-size: 4rem; margin-bottom: 1rem; animation: pulse 2s infinite; }
         @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.1); } }
         .urgency-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
@@ -421,4 +422,6 @@
         document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', function(e) { e.preventDefault(); const t = document.querySelector(this.getAttribute('href')); if(t) t.scrollIntoView({behavior:'smooth'}); }));
         const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('fade-in-up'); }), {threshold:0.1});
         document.querySelectorAll('.tech-item,.benefit-card,.process-card').forEach(el => obs.observe(el));
+        const urgencyEl = document.getElementById('urgency');
+        if(urgencyEl) { const urgencyObs = new IntersectionObserver(entries => { entries.forEach(e => { if(e.isIntersecting) { urgencyEl.classList.add('warning-risen'); urgencyObs.unobserve(urgencyEl); } }); }, {threshold: 0.15}); urgencyObs.observe(urgencyEl); }
     
