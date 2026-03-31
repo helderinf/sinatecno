@@ -423,5 +423,5 @@
         const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('fade-in-up'); }), {threshold:0.1});
         document.querySelectorAll('.tech-item,.benefit-card,.process-card').forEach(el => obs.observe(el));
         const urgencyEl = document.getElementById('urgency');
-        if(urgencyEl) { const urgencyObs = new IntersectionObserver(entries => { entries.forEach(e => { if(e.isIntersecting) { requestAnimationFrame(() => { urgencyEl.classList.add('warning-risen'); }); urgencyObs.unobserve(urgencyEl); } }); }, {threshold: 0.15, rootMargin: '0px 0px -80px 0px'}); urgencyObs.observe(urgencyEl); }
+        if(urgencyEl) { function riseUrgency(){ requestAnimationFrame(()=> requestAnimationFrame(()=> urgencyEl.classList.add('warning-risen'))); } var urgencyRect = urgencyEl.getBoundingClientRect(); if(urgencyRect.top < window.innerHeight * 0.85){ urgencyEl.style.transition='none'; urgencyEl.classList.add('warning-risen'); } else { function onScrollUrgency(){ var r = urgencyEl.getBoundingClientRect(); if(r.top < window.innerHeight - 60){ riseUrgency(); window.removeEventListener('scroll', onScrollUrgency); } } window.addEventListener('scroll', onScrollUrgency, {passive:true}); } }
     
